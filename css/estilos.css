@@ -9,8 +9,8 @@
 }
 
 
-/* Clase para quitar y poner los mensajes de error */
-.borrar{
+/* Class to show or hide the error mesaages */
+.delete{
     display:none;
 }
 
@@ -46,6 +46,7 @@
     padding-bottom: 1rem;
 }
 
+/* FORM */
 .form{
     display: flex;
 }
@@ -91,16 +92,16 @@
     cursor:pointer;
 }
 
-.form__btnaniadir {
+.form__btnadd {
     background-color: #50b1c2;
 }
 
-.form__btncomprar {
+.form__btnbuy {
     background-color: #73AAFF;
 }
 
 
-/* LISTA */
+/* LIST */
 
 .list {
     max-width: 700px;
