@@ -1,4 +1,5 @@
 ///////////////////////// Declaration of variables by reference ////////////////////////////
+
 const newfood = document.getElementById("newfood");
 const list = document.getElementById("list");
 const btnadd = document.getElementById("btnadd");
@@ -7,12 +8,11 @@ const error = document.getElementById("error");
 const total = document.getElementById("total");
 
 
-
-
 /////////////////////////////////////// Functions //////////////////////////////////////////
 
-const addFood = (name) => {
+//// Add new food to cart
 
+const addFood = (name) => {
     let listitem = document.createElement("LI")
     listitem.setAttribute("class", "listitem")
 
@@ -37,7 +37,7 @@ const addFood = (name) => {
     listitem.append(decrease)
 
     let amount = document.createElement("SPAN")
-    amount.textContent = "0"
+    amount.textContent = 1
     amount.setAttribute("class", "listitem__amount")
     listitem.append(amount)
 
@@ -73,7 +73,7 @@ const isRepeated = () => {
     return Array.from(list.children).some(item => item.firstElementChild.textContent === newfood.value)
 }
 
-const handlerBtnAdd = () => {
+const handlerAddFood = () => {
 
     //Check that some food has been written
     if (newfood.value.length != 0) {
@@ -97,7 +97,49 @@ const handlerBtnAdd = () => {
     
 }
 
+//// Controls functionality of each item
+
+const handlerUnits = (event, operation) => {
+    // set reference from units element
+    let units = event.target.parentElement.children[4]
+    // get current units
+    let currentunits = parseInt(units.textContent)
+
+    if (operation == "add") {
+        // update units
+        units.textContent = currentunits + 1
+    
+    } else if (operation == "decrease") {
+        //avoid decrease when units is 0
+        if (currentunits > 0) {
+            // update units
+            units.textContent = currentunits - 1
+        }
+    }
+}
+
+const handlerControls = (event) => {
+    if (event.target.tagName === "BUTTON") {
+        
+        switch (event.target.className) {
+            
+            case "listbtn__add":
+                handlerUnits(event, "add")
+                break 
+
+            case "listbtn__decrease":
+                handlerUnits(event, "decrease")
+                break
+
+            case "listbtn__delete":
+                event.target.parentElement.remove()
+                break
+        }
+    }
+}
 
 //////////////////////////////////// Events delegation //////////////////////////////////
 
-btnadd.addEventListener("click", handlerBtnAdd)
+btnadd.addEventListener("click", handlerAddFood)
+
+list.addEventListener("click", (event) => handlerControls(event))
