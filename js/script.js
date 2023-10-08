@@ -138,8 +138,35 @@ const handlerControls = (event) => {
     }
 }
 
+//// Keep updated the total price
+
+const updaterTotal = () => {
+    
+    let collector = 0
+
+    if (list.children.length !== 0) {
+        Array.from(list.children).forEach(item => {
+            // get price
+            let itemprice = parseFloat(item.children[1].textContent.slice(0, -2))
+            // get amount
+            let itemamount = parseFloat(item.children[4].textContent)
+            collector += itemprice * itemamount
+        })
+        //update total price
+        total.textContent = collector.toFixed(2) + " €"
+    }
+}
+
+
+
+
 //////////////////////////////////// Events delegation //////////////////////////////////
 
-btnadd.addEventListener("click", handlerAddFood)
-
-list.addEventListener("click", (event) => handlerControls(event))
+btnadd.addEventListener("click", () => {
+    handlerAddFood()
+    updaterTotal()
+})
+list.addEventListener("click", (event) => {
+    handlerControls(event)
+    updaterTotal()
+})
